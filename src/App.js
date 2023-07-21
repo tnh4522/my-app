@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import Footer from './components/Layout/Footer';
+import Header from './components/Layout/Header';
+import MenuLeft from './components/Layout/MenuLeft';
+import Slider from './components/Layout/Slider';
+import { useNavigate } from 'react-router-dom';
+function App(props) {
+  useNavigate();
+  function renderSlider() {
+    let path = window.location.pathname;
+    if (path === '/' || path === '/blog/list') {
+      return <Slider />;
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      {renderSlider()}
+      <section>
+        <div className="container">
+          <div className="row">
+            <MenuLeft />
+            {props.children}
+          </div>
+        </div>
+      </section>
+      <Footer></Footer>
+    </>
   );
 }
 
