@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import API from "../API/API";
+import HalfRating from "./RatingReadOnly";
 function Blog() {
 	const [getItems, setItems] = useState('');
 	useEffect(() => {
@@ -26,11 +27,7 @@ function Blog() {
 								<li><i className="fa fa-calendar"></i> {value.updated_at}</li>
 							</ul>
 							<span>
-								<i className="fa fa-star"></i>
-								<i className="fa fa-star"></i>
-								<i className="fa fa-star"></i>
-								<i className="fa fa-star"></i>
-								<i className="fa fa-star-half-o"></i>
+								<HalfRating idBlog={value.id} />
 							</span>
 						</div>
 						<Link to="">

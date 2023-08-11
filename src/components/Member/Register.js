@@ -114,7 +114,7 @@ function Register() {
                     <input type="text" placeholder="Enter Your Name" name="name" onChange={handleInput}/>
                     <input type="email" placeholder="Enter Your Email Address" name="email"  aria-describedby="emailHelp" onChange={handleInput}/>
                     <input type="password" placeholder="Enter Your Password" name="password" onChange={handleInput}/>
-                    <input type="number" placeholder="Enter Your Phone Number" name="phone" onChange={handleInput}/>
+                    <input type="tel" placeholder="Enter Your Phone Number" name="phone" onChange={handleInput}/>
                     <input type="text" placeholder="Enter Your Address" name="address" onChange={handleInput} />
                     <input type="file" placeholder="Enter Your Avatar" name="avatar" onChange={handleInputFile} />
                     <input type="hidden" placeholder="Enter Your Level" name="level" onChange={handleInput} />

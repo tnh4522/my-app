@@ -1,18 +1,67 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import Rating from '@mui/material/Rating';
 import { Link } from 'react-router-dom';
-import {MDbContainer, MDBRating} from 'mdbreact';
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import "@fortawesome/fontawesome-free/css/all.min.css";
-function Rating(props) {
-    const [rating, setRating] = useState(0);
+import { useNavigate } from 'react-router';
+import API from '../API/API';
+import Typography from '@mui/material/Typography';
+export default function BasicRating(props) {
+    const [rating, setRating] = React.useState(5);
+    const getUser = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+    let url = '/blog/rate/' + props.idBlog;
+    let accessToken = localStorage.getItem('token');
+    let config = {
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+        }
+    }
+    function handleChangeRating(e) {
+        if (getUser) {
+            const valueInput = parseInt(e.target.value);
+            setRating(valueInput);
+        }
+        else {
+            alert('Please login to rate!');
+            navigate('/login');
+        }
+    }
+    function handleSubmitRating(e) {
+        e.preventDefault();
+        if (getUser) {
+            const formData = new FormData();
+            formData.append('blog_id', props.idBlog);
+            formData.append('user_id', getUser.id);
+            formData.append('rate', rating);
+            API.post(url, formData, config)
+                .then(res => {
+                    if (res.data.status === 200) {
+                        setRating(0);
+                        alert("Your rating has been sent!");
+                        window.location.reload();
+                    }
+                }
+                ).catch(err => console.log(err));
+        } else {
+            alert('Please login to rate!');
+            navigate('/login');
+        }
+    }
     return (
         <div className="rating-area">
             <ul className="ratings">
-                <li className="rate-this">Rate this item:</li>
+                <li className="rate-this"><Typography component="legend">Rate this item:</Typography></li>
                 <li>
-                <b-form-rating v-model="value" variant="warning" class="mb-2"></b-form-rating>
+                    <form onSubmit={handleSubmitRating}>
+                    <Rating
+                        name="simple-controlled"
+                        value={rating}
+                        onChange={handleChangeRating}
+                    />
+                    <button type="submit" className="btn btn-default pull-right">Rate</button>
+                    </form>
                 </li>
-                <li className="color">(6 votes)</li>
             </ul>
             <ul className="tag">
                 <li>TAG:</li>
@@ -21,6 +70,6 @@ function Rating(props) {
                 <li><Link className="color" to="">Girls</Link></li>
             </ul>
         </div>
-    )
+
+    );
 }
-export default Rating;

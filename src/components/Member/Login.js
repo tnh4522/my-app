@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import FormError from "./FormError";
 import API from "../API/API";
-// import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 function Login() {
     const [getInput, setInput] = useState({
@@ -44,12 +43,7 @@ function Login() {
                     } else {
                         localStorage.setItem('user', JSON.stringify(res.data.Auth));
                         localStorage.setItem('token', res.data.token);
-                        if(window.location.pathname === '/login') {
-                            navigate('/');
-                        }
-                        else {
-                            navigate(-1);
-                        }
+                        navigate('/');
                     }
                 })
         }
@@ -59,7 +53,7 @@ function Login() {
             <div className="login-form">
                 <h2>Login to your account</h2>
                 <form onSubmit={handleSubmit} method="post">
-                    <input type="email" placeholder="Enter Your Email" name="email" value={getInput.email} onChange={handleInput}/>
+                    <input type="email" placeholder="Enter Your Email" name="email" value={getInput.email} onChange={handleInput} required autoComplete="email" autoFocus/>
                     <input type="password" placeholder="Enter Your Password" name="password" value={getInput.password} onChange={handleInput} />
                     <span>
                         <input type="checkbox" className="checkbox"/>

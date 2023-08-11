@@ -14,7 +14,7 @@ function Header() {
             user = JSON.parse(user);
             return (
                 <ul className="nav navbar-nav">
-                    <li><Link to=""><i className="fa fa-user"></i>Hello, {user.name}</Link></li>
+                    <li><Link to="/account"><i className="fa fa-user"></i>Hello, {user.name}</Link></li>
                     <li><Link to=""><i className="fa fa-star"></i> Wishlist</Link></li>
                     <li><Link to="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</Link></li>
                     <li><Link to="cart.html"><i className="fa fa-shopping-cart"></i> Cart</Link></li>
@@ -24,7 +24,6 @@ function Header() {
         } else {
             return (
                 <ul className="nav navbar-nav">
-                    <li><Link to=""><i className="fa fa-user"></i> Account</Link></li>
                     <li><Link to=""><i className="fa fa-star"></i> Wishlist</Link></li>
                     <li><Link to="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</Link></li>
                     <li><Link to="cart.html"><i className="fa fa-shopping-cart"></i> Cart</Link></li>

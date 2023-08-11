@@ -23,7 +23,7 @@ function BlogComment(props) {
     function handleCommentSubmit(e) {
         e.preventDefault();
         if(getComment === '') {
-            setCommentError('Please enter comment!');
+            setCommentError('Please enter your comment!');
         } else {
             setCommentError('');
             if(getUser) {
@@ -34,15 +34,14 @@ function BlogComment(props) {
                 formData.append('comment', getComment);
                 formData.append('image_user', getUser.avatar);
                 formData.append('name_user', getUser.name);
+                console.log(formData);
                 API.post(url, formData, config)
                 .then(res => {
                     if(res.data.status === 200) {
                         setComment('');
-                        alert("Your comment has been sent!");
-                        window.location.reload();
+                        props.getCMT(res.data.data);
                     }
-                }
-                ).catch(err => console.log(err));
+                }).catch(err => console.log(err));
             } else {
                 alert('Please login to comment!');
                 navigate('/login');

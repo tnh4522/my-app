@@ -1,24 +1,19 @@
 import Footer from './components/Layout/Footer';
 import Header from './components/Layout/Header';
+import MenuAccount from './components/Layout/MenuAcc';
 import MenuLeft from './components/Layout/MenuLeft';
 import Slider from './components/Layout/Slider';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 function App(props) {
-  useNavigate();
-  function renderSlider() {
-    let path = window.location.pathname;
-    if (path === '/' || path === '/blog/list') {
-      return <Slider />;
-    }
-  }
+  let path = useLocation();
   return (
     <>
       <Header />
-      {renderSlider()}
+      {path['pathname'] === '/' ? <Slider /> : ''}
       <section>
         <div className="container">
           <div className="row">
-            <MenuLeft />
+            {path['pathname'].includes('account') ? <MenuAccount /> : <MenuLeft />}
             {props.children}
           </div>
         </div>

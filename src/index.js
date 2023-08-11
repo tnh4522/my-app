@@ -8,6 +8,10 @@ import Blog from './components/Blog/Index';
 import Detail from './components/Blog/Detail';
 import Login from './components/Member/Login';
 import Register from './components/Member/Register';
+import Profile from './components/Member/Profile';
+import MyProduct from './components/Member/MyProduct';
+import AddProduct from './components/Member/AddProduct';
+import EditProduct from './components/Member/EditProduct';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +24,10 @@ root.render(
           <Route path='/blog/detail/:id' element={<Detail />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/account' element={<Profile />} />
+          <Route path='account/my-product' element={<MyProduct />} />
+          <Route path='account/add-product' element={<AddProduct />} />
+          <Route path='account/my-product/edit-product/:id' element={<EditProduct />} />
         </Routes>
       </App>
     </Router>
