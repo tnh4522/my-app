@@ -99,7 +99,7 @@ export default function AddProduct() {
         }
         else {
             const typeFile = ['image/png', 'image/jpg', 'image/jpeg', 'image/svg'];
-            if(getFiles.length > 0) {
+            if (getFiles.length > 0) {
                 Object.keys(getFiles.files).forEach((key) => {
                     if (typeFile.indexOf(getFiles.files[key].type) === -1) {
                         errorSubmit.files = 'File is not valid!';
@@ -110,7 +110,7 @@ export default function AddProduct() {
                         flag = false;
                     }
                 });
-                if(Object.keys(getFiles.files).length > 3){
+                if (Object.keys(getFiles.files).length > 3) {
                     errorSubmit.files = 'Maximun 3 files!';
                     flag = false;
                 }
@@ -157,6 +157,38 @@ export default function AddProduct() {
                 );
         }
     }
+    function fetchImage() {
+        if (getFiles.files !== undefined) {
+            return Object.keys(getFiles.files).map((key, index) => {
+                return (
+                    <div key={index} style={{ width: '100px', height: '100px', margin: '0px 5px 10px 0px' }}>
+                        <img key={index} src={require('./img/' + getFiles.files[key].name)} alt="" style={{ width: '100px', height: '100px', marginRight: '10px', border: '1px solid #fe980f' }} />
+                        <i className="fa fa-times" style={{ position: 'relative', top: '-100px', left: '80px', cursor: 'pointer', color: '#fe980f', fontSize: '20px' }} onClick={() => handleDeleteImage(key)}></i>
+                    </div>
+                )
+            })
+        }
+    }
+    function handleDeleteImage(key) {
+        setFiles(state => {
+            return {
+                ...state,
+                files: Object.keys(state.files).reduce((result, value) => {
+                    if (value !== key) {
+                        result[value] = state.files[value];
+                    }
+                    return result;
+                }, {})
+            }
+        })
+    }
+    function showSaleInput() {
+        if (getInput.status === '0') {
+            return (
+                <input type="number" name="sale" placeholder="Sale (%)" onChange={handleChange} />
+            )
+        }
+    }
     return (
         <div className="col-sm-5 col-sm-offset-1">
             <div className="signup-form">
@@ -177,9 +209,12 @@ export default function AddProduct() {
                         <option value="0">Sale</option>
                         <option value="1">New</option>
                     </select>
-                    <input type="number" name="sale" placeholder="Sale (%)" onChange={handleChange}/>
-                    <input type="text" name="company" placeholder="Company" onChange={handleChange}/>
-                    <input type="file" name='files' onChange={handleChangeImage} multiple/>
+                    {showSaleInput()}
+                    <input type="text" name="company" placeholder="Company" onChange={handleChange} />
+                    <input type="file" name='files' onChange={handleChangeImage} multiple />
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {fetchImage()}
+                    </div>
                     <textarea name="detail" placeholder="Description" onChange={handleChange}></textarea>
                     <button type="submit" className="btn btn-default">Add Product</button>
                 </form>

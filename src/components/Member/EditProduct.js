@@ -14,6 +14,15 @@ export default function EditProduct() {
         status: '',
         sale: ''
     });
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setGetInput(state => {
+            return {
+                ...state,
+                [name]: value
+            }
+        })
+    }
     const [getFiles, setFiles] = React.useState([]);
     function handleChangeImage(e) {
         const name = e.target.name;
@@ -22,15 +31,6 @@ export default function EditProduct() {
             return {
                 ...state,
                 [name]: files
-            }
-        })
-    }
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setGetInput(state => {
-            return {
-                ...state,
-                [name]: value
             }
         })
     }
@@ -43,10 +43,12 @@ export default function EditProduct() {
         }
     }), [token]);
     let productID = useParams().id;
+    const [getImages, setImages] = React.useState([]);
     useEffect(() => {
         API.get('/user/product/' + productID, config)
             .then(response => {
                 setGetInput(response.data.data);
+                setImages(response.data.data.image);
             })
             .catch(error => {
                 console.log(error)
@@ -87,7 +89,6 @@ export default function EditProduct() {
             </select>
         );
     }
-    
     const [getError, setError] = React.useState("");
     function handleSubmit(e) {
         e.preventDefault();
@@ -124,10 +125,9 @@ export default function EditProduct() {
         if (getFiles.length === 0) {
             errorSubmit.files = 'File is required!';
             flag = false;
-        }
-        else {
+        } else {
             const typeFile = ['image/png', 'image/jpg', 'image/jpeg', 'image/svg'];
-            if(getFiles.length > 0) {
+            if (getFiles.files) {
                 Object.keys(getFiles.files).forEach((key) => {
                     if (typeFile.indexOf(getFiles.files[key].type) === -1) {
                         errorSubmit.files = 'File is not valid!';
@@ -138,11 +138,17 @@ export default function EditProduct() {
                         flag = false;
                     }
                 });
-                if(Object.keys(getFiles.files).length > 3){
+                if (Object.keys(getFiles.files).length > 3) {
                     errorSubmit.files = 'Maximun 3 files!';
                     flag = false;
                 }
             }
+        }
+        const totalImages = getImages.length + Object.keys(getFiles.files).length - selectedImages.length;
+        console.log(totalImages);
+        if (totalImages > 3) {
+            errorSubmit.files = 'Maximun 3 files!';
+            flag = false;
         }
         if (!flag) {
             setError(errorSubmit);
@@ -160,7 +166,10 @@ export default function EditProduct() {
             Object.keys(getFiles.files).forEach((key) => {
                 formData.append('file[]', getFiles.files[key]);
             });
-            let url = '/user/product/add';
+            selectedImages.forEach((value) => {
+                formData.append('avatarCheckBox[]', value);
+            });
+            let url = '/user/product/update/' + productID;
             let accessToken = localStorage.getItem('token');
             let config = {
                 headers: {
@@ -175,24 +184,54 @@ export default function EditProduct() {
                         setError(res.data.errors);
                     }
                     else {
-                        alert('Add product success!');
+                        alert('Update product successfully!');
                         navigate('/account/my-product');
                     }
-                }
-                )
+                })
                 .catch(err => {
                     console.log(err);
-                }
-                );
+                });
         }
     }
+    function fetchImages() {
+        if (getImages) {
+            return getImages.map((value, index) => {
+                return (
+                    <div key={index} style={{ width: '100px', height: '100px', margin: '0px 5px 10px 0px' }}>
+                        <img key={index} src={require('./img/' + extractFilename(value))} alt="" style={{ width: '100px', height: '100px', marginRight: '10px', border: '1px solid #fe980f' }} />
+                        <input type="checkbox" name="deleteImage" value={value} onChange={(e) => handleDeleteImageCheckBox(e, value)} />
+                    </div>
+                )
+            })
+        }
+    }
+    function extractFilename(inputString) {
+        const parts = inputString.split('_');
+        if (parts.length === 2) {
+            return parts[1];
+        } else {
+            return inputString;
+        }
+    }
+    const [selectedImages, setSelectedImages] = React.useState([]);
+    function handleDeleteImageCheckBox(e, imageFileName) {
+        const isChecked = e.target.checked;
+        if (isChecked) {
+            setSelectedImages((prevSelectedImages) => [...prevSelectedImages, imageFileName]);
+        } else {
+            setSelectedImages((prevSelectedImages) => prevSelectedImages.filter((fileName) => fileName !== imageFileName));
+        }
+    }
+    console.log(getImages);
+    console.log(selectedImages);
+    console.log(getFiles);
     return (
         <div className="col-sm-5 col-sm-offset-1">
             <div className="signup-form">
                 <h2>Edit Product</h2>
                 <form encType="multipart/form-data" method='post' onSubmit={handleSubmit}>
-                    <input type="text" name="name" placeholder="Product Name" onChange={handleChange} value={getInput.name}/>
-                    <input type="number" name="price" placeholder="Product Price" onChange={handleChange} value={getInput.price}/>
+                    <input type="text" name="name" placeholder="Product Name" onChange={handleChange} value={getInput.name} />
+                    <input type="number" name="price" placeholder="Product Price" onChange={handleChange} value={getInput.price} />
                     <select className="form-select" name='category' onChange={handleChange}>
                         {fetchCategory()}
                     </select>
@@ -200,11 +239,14 @@ export default function EditProduct() {
                         {fetchBrand()}
                     </select>
                     {fetchStatus()}
-                    <input type="number" name="sale" placeholder="Sale (%)" onChange={handleChange} />
+                    <input type="number" name="sale" placeholder="Sale (%)" onChange={handleChange} value={getInput.sale} />
                     <input type="text" name="company" placeholder="Company" onChange={handleChange} value={getInput.company_profile} />
-                    <input type="file" name='files' onChange={handleChangeImage} multiple/>
+                    <input type="file" name='files' onChange={handleChangeImage} multiple />
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '50px' }}>
+                        {fetchImages()}
+                    </div>
                     <textarea name="detail" placeholder="Description" onChange={handleChange} value={getInput.detail}></textarea>
-                    <button type="submit" className="btn btn-default">Add Product</button>
+                    <button type="submit" className="btn btn-default">Update Product</button>
                 </form>
                 <FormError error={getError} />
             </div>
