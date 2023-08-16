@@ -33,28 +33,26 @@ function ListComment(props) {
     function fetchMainComment() {
         if (dataComment.length > 0) {
             return dataComment.map((value, key) => {
-                if (value.id_comment === 0) {
-                    return (
-                        <li className="media" key={key}>
-                            <Link className="pull-left" to="#">
-                                <img className="media-object" src={require('./images/man-two.jpg')} alt="" />
-                            </Link>
-                            <div className="media-body">
-                                <ul className="sinlge-post-meta">
-                                    <li><i className="fa fa-user"></i>{value.name_user}</li>
-                                    <li><i className="fa fa-clock-o"></i>{value.created_at}</li>
-                                    <li><i className="fa fa-calendar"></i>{value.updated_at}</li>
-                                </ul>
-                                <p>{value.comment}.</p>
-                                <Link className="btn btn-primary" to="" onClick={props.handleReplyComment} id={value.id}><i className="fa fa-reply"></i>Replay</Link>
-                            </div>
-                            <ul className="children">
-                                {fetchSubComment(value.id)}
+                return value.id_comment === 0 ? (
+                    <li className="media" key={key}>
+                        <Link className="pull-left" to="#">
+                            <img className="media-object" src={require('./images/man-two.jpg')} alt="" />
+                        </Link>
+                        <div className="media-body">
+                            <ul className="sinlge-post-meta">
+                                <li><i className="fa fa-user"></i>{value.name_user}</li>
+                                <li><i className="fa fa-clock-o"></i>{value.created_at}</li>
+                                <li><i className="fa fa-calendar"></i>{value.updated_at}</li>
                             </ul>
-                        </li>
-                    )
-                }
-            })
+                            <p>{value.comment}.</p>
+                            <Link className="btn btn-primary" to="" onClick={props.handleReplyComment} id={value.id}><i className="fa fa-reply"></i>Replay</Link>
+                        </div>
+                        <ul className="children">
+                            {fetchSubComment(value.id)}
+                        </ul>
+                    </li>
+                ) : null;
+            });            
         }
     }
 

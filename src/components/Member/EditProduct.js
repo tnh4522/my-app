@@ -157,9 +157,9 @@ export default function EditProduct() {
             let formData = new FormData();
             formData.append('name', getInput.name);
             formData.append('price', getInput.price);
-            formData.append('category', getInput.category);
-            formData.append('brand', getInput.brand);
-            formData.append('company', getInput.company);
+            formData.append('category', getInput.id_category ? getInput.id_category : getInput.category);
+            formData.append('brand', getInput.id_brand ? getInput.id_brand : getInput.brand);
+            formData.append('company', getInput.company_profile ? getInput.company_profile : getInput.company);
             formData.append('detail', getInput.detail);
             formData.append('status', getInput.status);
             formData.append('sale', getInput.sale);
@@ -225,6 +225,7 @@ export default function EditProduct() {
     console.log(getImages);
     console.log(selectedImages);
     console.log(getFiles);
+    console.log(getInput);
     return (
         <div className="col-sm-5 col-sm-offset-1">
             <div className="signup-form">

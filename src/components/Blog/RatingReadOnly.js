@@ -12,7 +12,7 @@ export default function HalfRating(props) {
             .catch(err => {
                 console.log(err);
             })
-    }, []);
+    }, [props.idBlog]);
 
     function caculateAverageRating(data) {
         if (Object.keys(data).length > 0) {

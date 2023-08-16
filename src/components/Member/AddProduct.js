@@ -99,7 +99,7 @@ export default function AddProduct() {
         }
         else {
             const typeFile = ['image/png', 'image/jpg', 'image/jpeg', 'image/svg'];
-            if (getFiles.length > 0) {
+            if (getFiles.files) {
                 Object.keys(getFiles.files).forEach((key) => {
                     if (typeFile.indexOf(getFiles.files[key].type) === -1) {
                         errorSubmit.files = 'File is not valid!';
