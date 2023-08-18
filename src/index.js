@@ -12,6 +12,7 @@ import Profile from './components/Member/Profile';
 import MyProduct from './components/Member/MyProduct';
 import AddProduct from './components/Member/AddProduct';
 import EditProduct from './components/Member/EditProduct';
+import ProductDetail from './components/Product/Detail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,6 +29,7 @@ root.render(
           <Route path='account/my-product' element={<MyProduct />} />
           <Route path='account/add-product' element={<AddProduct />} />
           <Route path='account/my-product/edit-product/:id' element={<EditProduct />} />
+          <Route path='product/detail/:id' element={<ProductDetail/>} />
         </Routes>
       </App>
     </Router>

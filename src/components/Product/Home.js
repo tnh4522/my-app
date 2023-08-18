@@ -6,7 +6,7 @@ function Home() {
     useEffect(() => {
         API.get('product')
         .then((res) => {
-            setProducts(res.data);
+            setProducts(res.data.data);
         })
         .catch((err) => {
             console.log(err);
@@ -57,9 +57,9 @@ function Home() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="#">
+                                    <Link to={'product/detail/' + product.id}>
                                         <i className="fa fa-plus-square"></i>
-                                        Add to compare
+                                        Show detail
                                     </Link>
                                 </li>
                             </ul>
@@ -361,10 +361,8 @@ function Home() {
                     </div>
                 </div>
             </div>
-
             <div className="recommended_items">
                 <h2 className="title text-center">recommended items</h2>
-
                 <div id="recommended-item-carousel" className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner">
                         <div className="item active">
@@ -377,7 +375,6 @@ function Home() {
                                             <p>Easy Polo Black Edition</p>
                                             <Link to="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</Link>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -390,7 +387,6 @@ function Home() {
                                             <p>Easy Polo Black Edition</p>
                                             <Link to="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</Link>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -403,7 +399,6 @@ function Home() {
                                             <p>Easy Polo Black Edition</p>
                                             <Link to="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</Link>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -418,7 +413,6 @@ function Home() {
                                             <p>Easy Polo Black Edition</p>
                                             <Link to="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</Link>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -431,7 +425,6 @@ function Home() {
                                             <p>Easy Polo Black Edition</p>
                                             <Link to="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</Link>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -444,7 +437,6 @@ function Home() {
                                             <p>Easy Polo Black Edition</p>
                                             <Link to="#" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</Link>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -458,7 +450,6 @@ function Home() {
                     </a>
                 </div>
             </div>
-
         </div>
     )
 }
