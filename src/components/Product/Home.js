@@ -20,11 +20,11 @@ function Home() {
                         <div className="single-products">
                             <div className="productinfo text-center">
                                 <img
-                                    src={product.image}
+                                    src={require("./img/" + extractFilenames(product.image)[0])}
                                     alt=""
                                     style={{ width: "200px", height: "200px" }}
                                 />
-                                <h2>{product.price}</h2>
+                                <h2>$ {product.price}</h2>
                                 <p>{product.name}</p>
                                 <Link
                                     to="#"
@@ -68,6 +68,24 @@ function Home() {
                 </div>
             );
         });
+    }
+    function extractFilenames(inputString) {
+        try {
+            const inputArray = JSON.parse(inputString);
+            const resultArray = [];
+
+            for (let i = 0; i < inputArray.length; i++) {
+                const filename = inputArray[i];
+                const startIndex = filename.indexOf("_") + 1;
+                const newFilename = filename.slice(startIndex);
+                resultArray.push(newFilename);
+            }
+
+            return resultArray;
+        } catch (error) {
+            console.error("Invalid input JSON string.");
+            return [];
+        }
     }
     return (
         <div className="col-sm-9 padding-right">
