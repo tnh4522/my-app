@@ -149,7 +149,19 @@ a#scrollUp i {
 .header-middle .container .row .col-sm-8 {
     padding-right: 0;
 }
-
+.cart_total_item {
+    background: #FE980F;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 14px;
+    height: 25px;
+    line-height: 25px;
+    position: absolute;
+    right: -25px;
+    text-align: center;
+    top: 10px;
+    width: 25px;
+}
 .usa {
     border-radius: 0;
     color: #B4B1AB;
@@ -1173,6 +1185,29 @@ h2.title {
     padding: 8px 20px;
     position: absolute;
     right: 0;
+}
+#overlay-notification {
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+}
+.overlay-notification-content {
+    background: #fff;
+    border-radius: 5px;
+    color: #FE980F;
+    font-size: 14px;
+    left: 50%;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    text-align: center;
 }
 
 #similar-product .carousel-inner .item {

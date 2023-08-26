@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import API from '../API/API';
 import { Button } from 'react-bootstrap';
+import { AppContext } from '../Product/AppContext';
 import MyVerticallyCenteredModal from '../Boostrap/MyVerticallyCenteredModal';
 function ProductDetail() {
     let productID = useParams().id;
     const [getProduct, setProduct] = useState({});
     const [show, setShow] = useState(false);
+    const [getQuantity, setQuantity] = useState(1);
+    function handleChange(event) {
+        let value = parseInt(event.target.value);
+        if(isNaN(value) || value < 1) {
+            value = 1;
+        }
+        setQuantity(value);
+    }
     useEffect(() => {
         API.get('product/detail/' + productID)
             .then(res => {
@@ -15,14 +24,13 @@ function ProductDetail() {
             .catch(error => console.log(error));
     }, [productID]);
     function renderProductDetail() {
-        if(Object.keys(getProduct).length > 0) {
+        if (Object.keys(getProduct).length > 0) {
             return (
-                <div className="product-details">
+                <div className="product-details" id={getProduct.id}>
                     <div className="col-sm-5">
                         <div className="view-product">
-                            <img id='mainImage' src={require('./img/' + extractFilenames(getProduct.image)[0])} alt="" style={{ width: "100%"}} />
+                            <img id='mainImage' src={require('./img/' + extractFilenames(getProduct.image)[0])} alt="" style={{ width: "100%" }} />
                             <Button variant="primary" onClick={() => setShow(true)}>ZOOM</Button>
-                            <MyVerticallyCenteredModal show={show} onHide={() => setShow(false)} image={extractFilenames(getProduct.image)[0]} />
                         </div>
                         <div id="similar-product" className="carousel slide" data-ride="carousel">
                             <div className="carousel-inner">
@@ -47,11 +55,11 @@ function ProductDetail() {
                             <span>
                                 <span>US ${getProduct.price}</span>
                                 <label>Quantity:</label>
-                                <input type="text" value="1"/>
-                                <button type="button" className="btn btn-fefault cart">
+                                <input type="number" value={getQuantity} onChange={handleChange} />
+                                <Link type="button" className="btn btn-fefault cart" onClick={addToCart}>
                                     <i className="fa fa-shopping-cart"></i>
                                     Add to cart
-                                </button>
+                                </Link>
                             </span>
                             <p><b>Availability:</b> In Stock</p>
                             <p><b>Condition:</b> New</p>
@@ -59,6 +67,7 @@ function ProductDetail() {
                             <Link to=""><img src="images/product-details/share.png" className="share img-responsive" alt="" /></Link>
                         </div>
                     </div>
+                    <MyVerticallyCenteredModal show={show} onHide={() => setShow(false)} image={extractFilenames(getProduct.image)[0]} />
                 </div>
             )
         }
@@ -88,15 +97,43 @@ function ProductDetail() {
             const imageArray = extractFilenames(getProduct.image);
             return imageArray.map((item, index) => {
                 return (
-                    <img src={require('./img/' + item)} alt="" key={index} onClick={changeImage} style={{ width: "25%"}}/>
+                    <img src={require('./img/' + item)} alt="" key={index} onClick={changeImage} style={{ width: "25%" }} />
                 )
             })
+        }
+    }
+    function addToCart(e) {
+        const productID = e.target.closest('.product-details').id;
+        console.log(productID);
+        var cartData = {
+            id: productID,
+            quantity: parseInt(getQuantity)
+        }
+        var cart = {};
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+        if (!cart[productID]) {
+            cart[productID] = cartData;
+        } else {
+            cart[productID].quantity += parseInt(getQuantity);
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartTotalItem();
+        showOverlay(true);
+    }
+    const updateCartTotalItem = useContext(AppContext).updateCartTotalItem;
+    function showOverlay(flag) {
+        if (flag) {
+            document.getElementById('overlay-notification').style.display = 'block';
+            setTimeout(function () {
+                document.getElementById('overlay-notification').style.display = 'none';
+            }, 1000);
         }
     }
     return (
         <div className="col-sm-9 padding-right">
             {renderProductDetail()}
-
             <div className="category-tab shop-details-tab">
                 <div className="col-sm-12">
                     <ul className="nav nav-tabs">

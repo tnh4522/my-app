@@ -13,6 +13,8 @@ import MyProduct from './components/Member/MyProduct';
 import AddProduct from './components/Member/AddProduct';
 import EditProduct from './components/Member/EditProduct';
 import ProductDetail from './components/Product/Detail';
+import Cart from './components/Cart/Cart';
+import Wishlist from './components/Product/WishList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,6 +32,8 @@ root.render(
           <Route path='account/add-product' element={<AddProduct />} />
           <Route path='account/my-product/edit-product/:id' element={<EditProduct />} />
           <Route path='product/detail/:id' element={<ProductDetail/>} />
+          <Route path='cart' element={<Cart />} />
+          <Route path='wish-list' element={<Wishlist />} />
         </Routes>
       </App>
     </Router>

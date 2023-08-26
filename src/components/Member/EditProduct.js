@@ -145,7 +145,6 @@ export default function EditProduct() {
             }
         }
         const totalImages = getImages.length + Object.keys(getFiles.files).length - selectedImages.length;
-        console.log(totalImages);
         if (totalImages > 3) {
             errorSubmit.files = 'Maximun 3 files!';
             flag = false;

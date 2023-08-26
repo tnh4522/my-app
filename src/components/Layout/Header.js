@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../Product/AppContext';
 function Header() {
     const navigate = useNavigate();
     function handleLogout() {
@@ -8,26 +9,27 @@ function Header() {
         localStorage.removeItem('token');
         navigate('/');
     }
+    let cartTotalItem = useContext(AppContext).cartTotalItem;
     function renderLogin() {
         let user = localStorage.getItem('user');
         if (user) {
             user = JSON.parse(user);
             return (
                 <ul className="nav navbar-nav">
-                    <li><Link to="/account"><i className="fa fa-user"></i>Hello, {user.name}</Link></li>
-                    <li><Link to=""><i className="fa fa-star"></i> Wishlist</Link></li>
-                    <li><Link to="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</Link></li>
-                    <li><Link to="cart.html"><i className="fa fa-shopping-cart"></i> Cart</Link></li>
-                    <li><Link to="/login" onClick={handleLogout}><i className="fa fa-sign-out"></i> Logout</Link></li>
+                    <li><Link to="account"><i className="fa fa-user"></i> Hello, {user.name}</Link></li>
+                    <li><Link to="wish-list"><i className="fa fa-star"></i> Wishlist</Link></li>
+                    <li><Link to=""><i className="fa fa-crosshairs"></i> Checkout</Link></li>
+                    <li><Link to="cart"><i className="fa fa-shopping-cart"></i> Cart <span className='cart_total_item'>{cartTotalItem}</span></Link></li>
+                    <li><Link to="login" onClick={handleLogout}><i className="fa fa-sign-out"></i> Logout</Link></li>
                 </ul>
             )
         } else {
             return (
                 <ul className="nav navbar-nav">
-                    <li><Link to=""><i className="fa fa-star"></i> Wishlist</Link></li>
-                    <li><Link to="checkout.html"><i className="fa fa-crosshairs"></i> Checkout</Link></li>
-                    <li><Link to="cart.html"><i className="fa fa-shopping-cart"></i> Cart</Link></li>
-                    <li><Link to="/login"><i className="fa fa-lock"></i> Login</Link></li>
+                    <li><Link to="wish-list"><i className="fa fa-star"></i> Wishlist</Link></li>
+                    <li><Link to=""><i className="fa fa-crosshairs"></i> Checkout</Link></li>
+                    <li><Link to="cart"><i className="fa fa-shopping-cart"></i> Cart</Link></li>
+                    <li><Link to="login"><i className="fa fa-lock"></i> Login</Link></li>
                 </ul>
             )
         }
@@ -59,7 +61,6 @@ function Header() {
                     </div>
                 </div>
             </div>
-
             <div className="header-middle">
                 <div className="container">
                     <div className="row">
@@ -117,10 +118,10 @@ function Header() {
                                     <li><Link to="/" className="active">Home</Link></li>
                                     <li className="dropdown"><Link to="#">Shop<i className="fa fa-angle-down"></i></Link>
                                         <ul role="menu" className="sub-menu">
-                                            <li><Link to="shop.html">Products</Link></li>
-                                            <li><Link to="product-details.html">Product Details</Link></li>
-                                            <li><Link to="checkout.html">Checkout</Link></li>
-                                            <li><Link to="cart.html">Cart</Link></li>
+                                            <li><Link to="">Products</Link></li>
+                                            <li><Link to="">Product Details</Link></li>
+                                            <li><Link to="">Checkout</Link></li>
+                                            <li><Link to="">Cart</Link></li>
                                         </ul>
                                     </li>
                                     <li className="dropdown"><Link to="#">Blog<i className="fa fa-angle-down"></i></Link>
@@ -129,8 +130,8 @@ function Header() {
                                             <li><Link to="/blog/detail">Blog Single</Link></li>
                                         </ul>
                                     </li>
-                                    <li><Link to="404.html">404</Link></li>
-                                    <li><Link to="contact-us.html">Contact</Link></li>
+                                    <li><Link to="">404</Link></li>
+                                    <li><Link to="">Contact</Link></li>
                                 </ul>
                             </div>
                         </div>
