@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../API/API";
+import { useDispatch } from 'react-redux';
+import { totalCartItem } from '../../actions/totalCartItem';
 function Cart() {
     const [getData, setData] = useState([]);
     const getCart = JSON.parse(localStorage.getItem('cart'));
@@ -38,7 +40,7 @@ function Cart() {
                         <div className="cart_quantity_button">
                             <Link className="cart_quantity_up" onClick={upQuantity}> + </Link>
                             <input className="cart_quantity_input" type="text" name="quantity" value={item.qty} autoComplete="off" size="2" readOnly />
-                            <Link className="cart_quantity_down" onClick={downQuantity}> - </Link>
+                            <Link className="cart_quantity_down" onClick={handleUpdateCartTotalItem}> - </Link>
                         </div>
                     </td>
                     <td className="cart_total" >
@@ -95,7 +97,7 @@ function Cart() {
                 e.target.parentNode.parentNode.parentNode.remove();
             }
         }
-        updateCartTotalItem();
+        handleUpdateCartTotalItem();
         updatePriceTotalAll();
     }
     function updateQuantity(id, quantity) {
@@ -139,6 +141,12 @@ function Cart() {
         document.getElementById('price-total-all').innerHTML = priceTotal;
     }
     let priceTotalAll = localStorage.getItem('priceTotalAll');
+    const dispatch = useDispatch();
+    function handleUpdateCartTotalItem() {
+        let total = localStorage.getItem('cartTotalItem');
+        const action = totalCartItem(total);
+        dispatch(action);
+    }
     return (
         <div>
             <section id="cart_items">

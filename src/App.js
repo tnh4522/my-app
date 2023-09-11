@@ -5,10 +5,12 @@ import MenuLeft from './components/Layout/MenuLeft';
 import Slider from './components/Layout/Slider';
 import { useLocation } from 'react-router-dom';
 import { AppContext } from './components/Product/AppContext';
+
 function App(props) {
   let path = useLocation();
   let user = localStorage.getItem('user');
   let cartTotalItem = 0;
+
   if (user) {
     user = JSON.parse(user);
     cartTotalItem = localStorage.getItem('cartTotalItem');
@@ -17,15 +19,15 @@ function App(props) {
     let cart = JSON.parse(localStorage.getItem('cart'));
     let cartTotalItem = 0;
     if (cart) {
-        Object.keys(cart).forEach(function (key) {
-            cartTotalItem += cart[key].quantity;
-        });
+      Object.keys(cart).forEach(function (key) {
+        cartTotalItem += cart[key].quantity;
+      });
     }
     localStorage.setItem('cartTotalItem', cartTotalItem);
-}
+  }
   return (
-    <AppContext.Provider value={{cartTotalItem, updateCartTotalItem}} >
-            <Header />
+    <AppContext.Provider value={{ cartTotalItem, updateCartTotalItem }} >
+      <Header />
       {path['pathname'] === '/' ? <Slider /> : ''}
       <section>
         <div className="container">
