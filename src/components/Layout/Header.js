@@ -11,7 +11,6 @@ function Header() {
         navigate('/');
     }
     let totalCartItem = useSelector(state => state.totalCartItem.total);
-    console.log(totalCartItem);
     let cartTotalItem = useContext(AppContext).cartTotalItem;
     function renderLogin() {
         let user = localStorage.getItem('user');

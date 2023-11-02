@@ -1,4 +1,3 @@
-import React from 'react';
 function FormError(props) {
     function render() {
         let { error } = props;

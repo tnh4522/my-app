@@ -44,12 +44,10 @@ function Detail(props) {
                             <li><Link to="#">Next</Link></li>
                         </ul>
                     </div>
-                    
                 </div>
             )
         }
     }
-    //Parse HTML
     const createMarkup = (html) => {
         return { __html: html };
     }

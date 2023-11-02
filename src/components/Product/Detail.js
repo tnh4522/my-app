@@ -29,7 +29,8 @@ function ProductDetail() {
                 <div className="product-details" id={getProduct.id}>
                     <div className="col-sm-5">
                         <div className="view-product">
-                            <img id='mainImage' src={require('./img/' + extractFilenames(getProduct.image)[0])} alt="" style={{ width: "100%" }} />
+                            <img id='mainImage' 
+                             alt="" style={{ width: "100%" }} />
                             <Button variant="primary" onClick={() => setShow(true)}>ZOOM</Button>
                         </div>
                         <div id="similar-product" className="carousel slide" data-ride="carousel">

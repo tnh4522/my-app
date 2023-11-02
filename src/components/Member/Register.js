@@ -28,41 +28,41 @@ function Register() {
         e.preventDefault();
         let errorSubmit = {};
         let flag = true;
-        if(getInput.name === '') {
+        if (getInput.name === '') {
             errorSubmit.name = 'Name is required!';
             flag = false;
         }
-        if(getInput.email === '') {
+        if (getInput.email === '') {
             errorSubmit.email = 'Email is required!';
             flag = false;
         }
-        if(getInput.password === '') {
+        if (getInput.password === '') {
             errorSubmit.password = 'Password is required!';
             flag = false;
         }
-        if(getInput.phone === '') {
+        if (getInput.phone === '') {
             errorSubmit.phone = 'Phone is required!';
             flag = false;
         }
-        if(getInput.address === '') {
+        if (getInput.address === '') {
             errorSubmit.address = 'Address is required!';
             flag = false;
         }
-        if(getInput.avatar === '') {
+        if (getInput.avatar === '') {
             errorSubmit.avatar = 'Avatar is required!';
             flag = false;
         } else {
             const typeFile = ['image/png', 'image/jpg', 'image/jpeg', 'image/svg'];
-            if(typeFile.indexOf(getInput.file.type) === -1) {
+            if (typeFile.indexOf(getInput.file.type) === -1) {
                 errorSubmit.avatar = 'Avatar is not valid!';
                 flag = false;
             }
-            else if(getInput.file.size > 1024 * 1024) {
+            else if (getInput.file.size > 1024 * 1024) {
                 errorSubmit.avatar = 'Avatar is too large!';
                 flag = false;
             }
         }
-        if(!flag) {
+        if (!flag) {
             setError(errorSubmit);
         }
         else {
@@ -78,7 +78,7 @@ function Register() {
 
             API.post('register', formData)
                 .then(res => {
-                    if(res.data.errors){
+                    if (res.data.errors) {
                         setError(res.data.errors);
                     } else {
                         console.log(res.data)
@@ -89,13 +89,12 @@ function Register() {
                 .catch(err => {
                     console.log(err);
                 });
-           
         }
     }
     function handleInputFile(e) {
         const fileInput = e.target.files;
         let reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             setInput((state) => {
                 return {
                     ...state,
@@ -111,10 +110,10 @@ function Register() {
             <div className="signup-form">
                 <h2>New User Signup!</h2>
                 <form onSubmit={handleSubmit} method="post" encType="multipart/form-data">
-                    <input type="text" placeholder="Enter Your Name" name="name" onChange={handleInput}/>
-                    <input type="email" placeholder="Enter Your Email Address" name="email"  aria-describedby="emailHelp" onChange={handleInput}/>
-                    <input type="password" placeholder="Enter Your Password" name="password" onChange={handleInput}/>
-                    <input type="tel" placeholder="Enter Your Phone Number" name="phone" onChange={handleInput}/>
+                    <input type="text" placeholder="Enter Your Name" name="name" onChange={handleInput} />
+                    <input type="email" placeholder="Enter Your Email Address" name="email" aria-describedby="emailHelp" onChange={handleInput} />
+                    <input type="password" placeholder="Enter Your Password" name="password" onChange={handleInput} />
+                    <input type="tel" placeholder="Enter Your Phone Number" name="phone" onChange={handleInput} />
                     <input type="text" placeholder="Enter Your Address" name="address" onChange={handleInput} />
                     <input type="file" placeholder="Enter Your Avatar" name="avatar" onChange={handleInputFile} />
                     <input type="hidden" placeholder="Enter Your Level" name="level" onChange={handleInput} />

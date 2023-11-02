@@ -53,7 +53,7 @@ function Login() {
             <div className="login-form">
                 <h2>Login to your account</h2>
                 <form onSubmit={handleSubmit} method="post">
-                    <input type="email" placeholder="Enter Your Email" name="email" value={getInput.email} onChange={handleInput} required autoComplete="email" autoFocus/>
+                    <input type="email" placeholder="Enter Your Email" name="email" value={getInput.email} onChange={handleInput} required autoComplete="email" autoFocus aria-describedby="emailHelp"/>
                     <input type="password" placeholder="Enter Your Password" name="password" value={getInput.password} onChange={handleInput} />
                     <span>
                         <input type="checkbox" className="checkbox"/>

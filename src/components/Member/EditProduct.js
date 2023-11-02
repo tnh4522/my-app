@@ -183,7 +183,6 @@ export default function EditProduct() {
                         setError(res.data.errors);
                     }
                     else {
-                        alert('Update product successfully!');
                         navigate('/account/my-product');
                     }
                 })
@@ -221,10 +220,6 @@ export default function EditProduct() {
             setSelectedImages((prevSelectedImages) => prevSelectedImages.filter((fileName) => fileName !== imageFileName));
         }
     }
-    console.log(getImages);
-    console.log(selectedImages);
-    console.log(getFiles);
-    console.log(getInput);
     return (
         <div className="col-sm-5 col-sm-offset-1">
             <div className="signup-form">

@@ -22,30 +22,30 @@ function BlogComment(props) {
     }
     function handleCommentSubmit(e) {
         e.preventDefault();
-        if(getComment === '') {
+        if (getComment === '') {
             setCommentError('Please enter your comment!');
         } else {
             setCommentError('');
-            if(getUser) {
-                const formData = new FormData();
-                formData.append('id_blog', props.idBlog);
-                formData.append('id_user', getUser.id);
-                formData.append('id_comment', props.idSubComment ? props.idSubComment : 0);
-                formData.append('comment', getComment);
-                formData.append('image_user', getUser.avatar);
-                formData.append('name_user', getUser.name);
-                console.log(formData);
-                API.post(url, formData, config)
+        }
+        if (getUser) {
+            const formData = new FormData();
+            formData.append('id_blog', props.idBlog);
+            formData.append('id_user', getUser.id);
+            formData.append('id_comment', props.idSubComment ? props.idSubComment : 0);
+            formData.append('comment', getComment);
+            formData.append('image_user', getUser.avatar);
+            formData.append('name_user', getUser.name);
+            API.post(url, formData, config)
                 .then(res => {
-                    if(res.data.status === 200) {
+                    if (res.data.status === 200) {
                         setComment('');
+                        console.log(res.data.data);
                         props.getCMT(res.data.data);
                     }
                 }).catch(err => console.log(err));
-            } else {
-                alert('Please login to comment!');
-                navigate('/login');
-            }
+        } else {
+            alert('Please login to comment!');
+            navigate('/login');
         }
     }
     return (
@@ -61,7 +61,7 @@ function BlogComment(props) {
                         <textarea name="message" rows="11" value={getComment} onChange={handleChangeCommentInput}></textarea>
                         <button type="submit" className="btn btn-primary" to="">Post comment</button>
                     </form>
-                    <h5 style={{color: "red"}}>{getCommentError}</h5>
+                    <h5 style={{ color: "red" }}>{getCommentError}</h5>
                 </div>
             </div>
         </div>

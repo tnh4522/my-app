@@ -40,7 +40,7 @@ function Cart() {
                         <div className="cart_quantity_button">
                             <Link className="cart_quantity_up" onClick={upQuantity}> + </Link>
                             <input className="cart_quantity_input" type="text" name="quantity" value={item.qty} autoComplete="off" size="2" readOnly />
-                            <Link className="cart_quantity_down" onClick={handleUpdateCartTotalItem}> - </Link>
+                            <Link className="cart_quantity_down" onClick={downQuantity}> - </Link>
                         </div>
                     </td>
                     <td className="cart_total" >
